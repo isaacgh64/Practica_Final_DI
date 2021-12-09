@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
         buttonTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(MainActivity.this,MiTV.class);
+                startActivity(intent);
             }
         });
         buttonSeries.setOnClickListener(new View.OnClickListener() {

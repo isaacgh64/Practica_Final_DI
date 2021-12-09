@@ -1,15 +1,21 @@
 package com.example.practica_final_di;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
@@ -46,6 +52,15 @@ public class MiBD extends AppCompatActivity {
     ListView listView;
     ProgressDialog progressDialog;
     static final String SERVIDOR = "http://192.168.3.2";
+
+    //ArrayList que usareamos para mostrar los datos más Bonitos
+    ArrayList<String> ID=new ArrayList();
+    ArrayList<String> Titulo=new ArrayList();
+    ArrayList<String> Anio=new ArrayList();
+    ArrayList<String> Cadena=new ArrayList();
+    ArrayList<String> Temporadas=new ArrayList();
+
+    AdaptadorParaSeries adaptadorParaSeries;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +87,7 @@ public class MiBD extends AppCompatActivity {
             public void onClick(View view) {
                 DescargarCSV descargarCSV = new DescargarCSV();
                 descargarCSV.execute("/PF/listadoCSV.php");
+
             }
         });
         //Botón que lee los datos por JSON
@@ -125,6 +141,11 @@ public class MiBD extends AppCompatActivity {
             }
         });
 
+    }
+    //Función que me rellena el ListView
+    void RellenarListView(){
+        adaptadorParaSeries = new AdaptadorParaSeries(this,R.layout.adaptador,ID);
+        listView.setAdapter(adaptadorParaSeries);
     }
     //Clase que usaremos para borrar los datos
     private class Borrar extends AsyncTask<String, Void, Void> {
@@ -360,19 +381,18 @@ public class MiBD extends AppCompatActivity {
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
             ArrayAdapter<String> adapter;
-            List<String> list = new ArrayList<String>();
+
             String[] lineas = todo.split("\n");
             for (String linea : lineas) {
                 String[] campos = linea.split(";");
-                String dato =" "+ campos[0]+"\t";
-                dato += campos[1]+"\t";
-                dato += campos[2]+"\t";
-                dato += campos[3]+"\t";
-                dato += campos[4];
-                list.add(dato);
+                ID.add(campos[0]);
+                Titulo.add(campos[1]);
+                Anio.add(campos[2]);
+                Cadena.add(campos[3]);
+                Temporadas.add(campos[4]);
+
             }
-            adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, list);
-            listView.setAdapter(adapter);
+            RellenarListView();
             progressDialog.dismiss();
         }
 
@@ -579,6 +599,49 @@ public class MiBD extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
+        }
+    }
+    //Clase con la que adaptaremos nuestras preguntas para que se vean mejor
+    private class AdaptadorParaSeries extends ArrayAdapter<String> {
+
+        public AdaptadorParaSeries(@NonNull Context context, int resource, @NonNull ArrayList<String> objects) {
+            super(context, resource, objects);
+
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            return rellenarFila(position, convertView, parent);
+        }
+
+        @Override
+        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            return rellenarFila(position, convertView, parent);
+        }
+
+        public View rellenarFila(int posicion, View view, ViewGroup padre) {
+
+            LayoutInflater inflater = getLayoutInflater();
+            View mifila = inflater.inflate(R.layout.adaptador, padre, false);
+
+            TextView id = mifila.findViewById(R.id.textViewID);
+            id.setText(ID.get(posicion));
+
+            TextView titulo = mifila.findViewById(R.id.textViewTitulo);
+            titulo.setText(Titulo.get(posicion));
+
+            TextView anio = mifila.findViewById(R.id.textViewAnio);
+            anio.setText(Anio.get(posicion));
+
+            TextView cadena = mifila.findViewById(R.id.textViewCadena);
+            cadena.setText(Cadena.get(posicion));
+
+            TextView temporada = mifila.findViewById(R.id.textViewTemporadas);
+            temporada.setText(Temporadas.get(posicion));
+
+
+            return mifila;
         }
     }
 

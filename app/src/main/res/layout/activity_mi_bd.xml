@@ -23,8 +23,8 @@
 
             <ListView
                 android:id="@+id/listView"
-                android:layout_width="352dp"
-                android:layout_height="340dp"
+                android:layout_width="387dp"
+                android:layout_height="330dp"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="1dp"
                 android:layout_marginEnd="1dp"
@@ -109,7 +109,7 @@
 
     <EditText
         android:id="@+id/editTextID"
-        android:layout_width="157dp"
+        android:layout_width="50dp"
         android:layout_height="49dp"
         android:ems="10"
         android:hint="ID"
@@ -139,18 +139,18 @@
 
     <EditText
         android:id="@+id/editTextAnio"
-        android:layout_width="157dp"
-        android:layout_height="47dp"
+        android:layout_width="110dp"
+        android:layout_height="49dp"
         android:ems="10"
         android:hint="Año Estreno"
         android:inputType="number"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.232" />
+        app:layout_constraintVertical_bias="0.234" />
 
     <EditText
         android:id="@+id/editTextCadena"
