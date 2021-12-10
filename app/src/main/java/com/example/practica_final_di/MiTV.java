@@ -92,9 +92,10 @@ public class MiTV extends AppCompatActivity {
 
                         if (nodo instanceof Element) {
                             NodeList nietos = nodo.getChildNodes();
+
                             String dato;
                             for (int j = 0; j < nietos.getLength(); j++) {
-                                todo+=  nietos.item(j).getTextContent();
+                                todo+=nietos.item(j).getTextContent();
                             }
                             list.add(todo);
                             todo="";
