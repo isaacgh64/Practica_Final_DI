@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Practica_Final_DI"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SeriesFav"
+            android:exported="false" />
+        <activity
             android:name=".MiTV"
             android:exported="false" />
         <activity

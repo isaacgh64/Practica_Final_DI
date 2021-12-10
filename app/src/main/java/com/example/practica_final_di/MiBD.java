@@ -90,14 +90,8 @@ public class MiBD extends AppCompatActivity {
 
             }
         });
-        //Botón que lee los datos por JSON
-        buttonJSON.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DescargarJSON descargarJSON = new DescargarJSON();
-                descargarJSON.execute("/PF/listadoJSON.php");
-            }
-        });
+
+
         //Botón que nos lee los datos por XML
         buttonXML.setOnClickListener(new View.OnClickListener() {
             @Override
