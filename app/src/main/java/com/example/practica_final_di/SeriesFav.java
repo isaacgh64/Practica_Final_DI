@@ -4,13 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -48,18 +52,45 @@ public class SeriesFav extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_series_fav);
         listView=findViewById(R.id.listView);
+        Foto.add(R.drawable.papel);
+        Foto.add(R.drawable.brk);
+        Foto.add(R.drawable.lupin);
+        Foto.add(R.drawable.los);
+        Foto.add(R.drawable.sgh);
         Ejecutar.add("https://api.themoviedb.org/3/search/tv?api_key=612e085c9c82a64498c74fac7cfbadd4&language=es-es&query=La+Casa+de+Papel&page=1");
         Ejecutar.add("https://api.themoviedb.org/3/search/tv?api_key=612e085c9c82a64498c74fac7cfbadd4&language=es-es&query=Breaking+Bad&page=1");
+        Ejecutar.add("https://api.themoviedb.org/3/search/tv?api_key=612e085c9c82a64498c74fac7cfbadd4&language=es-es&query=Lupin&result=2");
+        Ejecutar.add("https://api.themoviedb.org/3/search/tv?api_key=612e085c9c82a64498c74fac7cfbadd4&language=es-es&query=Los+100&page=1&results=1");
+        Ejecutar.add("https://api.themoviedb.org/3/search/tv?api_key=612e085c9c82a64498c74fac7cfbadd4&language=es-es&query=Stranger+Things&page=1&results=1");
         DescargarJSON descargarJSON = new DescargarJSON();
         descargarJSON.execute(Ejecutar.get(posicion));
         posicion++;
 
-        Foto.add(R.drawable.papel);
-        Foto.add(R.drawable.brk);
-
-
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+               MostrarInfo(i);
+            }
+        });
     }
+    //Función que nos muestra los datos de la película que hemos pinchado
+    void MostrarInfo(int peli){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.InfoSerie);
+        builder.setIcon(Foto.get(peli));
+        builder.setMessage(getString(R.string.NombreSerie)+Titulo.get(peli)+
+                "\n\n"+getString(R.string.DescipcionSerie)+Descripcion.get(peli)+
+                "\n\n"+getString(R.string.FechaEmision)+FechaSalida.get(peli)+
+                "\n\n"+getString(R.string.PopuSerie)+Popularidad.get(peli));
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+    }
+    //Función que nos va rellenando nuestro List View mientras nos va leyendo los datos del JSON
     void RellenarListView(){
         AdaptadorParaSeries1 adaptadorParaSeries1= new AdaptadorParaSeries1(this,R.layout.series,Titulo);
         listView.setAdapter(adaptadorParaSeries1);
@@ -67,6 +98,11 @@ public class SeriesFav extends AppCompatActivity {
             DescargarJSON descargarJSON = new DescargarJSON();
             descargarJSON.execute(Ejecutar.get(posicion));
             posicion++;
+            Log.i("ENTRADO","vez"+posicion);
+        }
+        else{
+            progressDialog.dismiss();
+            Log.i("ENTRADO","Saliendo");
         }
 
     }
@@ -78,9 +114,10 @@ public class SeriesFav extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(SeriesFav.this);
-            progressDialog.setTitle("Descargando datos...");
+            progressDialog.setTitle(getString(R.string.DescargarD));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setIndeterminate(true);
+            progressDialog.setIndeterminate(false);
+            progressDialog.setProgress(50);
             progressDialog.show();
         }
 
@@ -100,14 +137,14 @@ public class SeriesFav extends AppCompatActivity {
                     flag=false;
                 }
             }
-            RellenarListView();
             progressDialog.dismiss();
+            RellenarListView();
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(progressDialog.getSecondaryProgress() + 10);
+            progressDialog.setProgress(progressDialog.getProgress() + 99);
 
         }
 
@@ -133,7 +170,7 @@ public class SeriesFav extends AppCompatActivity {
                     br.close();
                     inputStream.close();
                 } else {
-                    Toast.makeText(SeriesFav.this, "No me pude conectar a la nube", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SeriesFav.this, getString(R.string.NoConectar), Toast.LENGTH_SHORT).show();
                 }
                 Thread.sleep(2000);
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SerieFlix</string>
+    <string name="BorrarD">Deleting data...</string>
+    <string name="NoConectar">I couldn\'t connect to the cloud</string>
+    <string name="Actualizar">" Updating data..."</string>
+    <string name="Subiendo">Uploading data...</string>
+    <string name="DescargarD">Downloading data ...</string>
+    <string name="BorrarBD">Delete</string>
+    <string name="InfoSerie">Series Information</string>
+    <string name="NombreSerie">"Original Name: "</string>
+    <string name="DescipcionSerie">"Description: "</string>
+    <string name="FechaEmision">"First chapter issue date: "</string>
+    <string name="PopuSerie">"Popularity: "</string>
+    <string name="DeseoVer">"What do you want to see today? "</string>
+    <string name="MisDatos">My data</string>
+    <string name="Mando">TV remote</string>
+    <string name="Series1">My Series</string>
+    <string name="CSV">By CSV</string>
+    <string name="Json">By Json</string>
+    <string name="XML">By Xml</string>
+    <string name="TituloBD">Title</string>
+    <string name="AnioEstrenoBD">Year Premiere</string>
+    <string name="CadenaBD">Chain</string>
+    <string name="TemporadasBD">"Number of Seasons "</string>
+    <string name="ModificarBD">Modify</string>
+    <string name="InsertarBD">Insert</string>
+</resources>

@@ -49,7 +49,7 @@ public class MiTV extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MiTV.this);
-            progressDialog.setTitle("Descargando datos...");
+            progressDialog.setTitle(getString(R.string.DescargarD));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setIndeterminate(true);
             progressDialog.show();
@@ -103,7 +103,7 @@ public class MiTV extends AppCompatActivity {
 
                     }
                 } else {
-                    Toast.makeText(MiTV.this, "No me pude conectar a la nube", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MiTV.this, getString(R.string.NoConectar), Toast.LENGTH_SHORT).show();
                 }
                 Thread.sleep(2000);
 

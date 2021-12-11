@@ -1,3 +1,27 @@
 <resources>
-    <string name="app_name">Practica_Final_DI</string>
+    <string name="app_name">SerieFlix</string>
+    <string name="BorrarD">Borrando datos...</string>
+    <string name="NoConectar">No me pude conectar a la nube</string>
+    <string name="Actualizar">Actualizando datos...</string>
+    <string name="Subiendo">Subiendo datos...</string>
+    <string name="DescargarD">Descargando datos...</string>
+    <string name="InfoSerie">Información de la Serie</string>
+    <string name="NombreSerie">"Nombre Original: "</string>
+    <string name="DescipcionSerie">"Descipción: "</string>
+    <string name="FechaEmision">"Fecha emisión primer capítulo: "</string>
+    <string name="PopuSerie">"Popularidad: "</string>
+    <string name="DeseoVer">¿Qué deseas ver hoy?</string>
+    <string name="MisDatos">Mis Datos</string>
+    <string name="Mando">Mando TV</string>
+    <string name="Series1">Mis Series</string>
+    <string name="CSV">Por CSV</string>
+    <string name="Json">Por Json</string>
+    <string name="XML">Por XML</string>
+    <string name="TituloBD">Titulo</string>
+    <string name="AnioEstrenoBD">Año Estreno</string>
+    <string name="CadenaBD">Cadena</string>
+    <string name="TemporadasBD">Número de Temporadas</string>
+    <string name="ModificarBD">Modificar</string>
+    <string name="BorrarBD" >Borrar</string>
+    <string name="InsertarBD">Insertar</string>
 </resources>

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -135,6 +136,18 @@ public class MiBD extends AppCompatActivity {
             }
         });
 
+        //Hacemos que al pulsar el ListView nos lo muestre en los editText
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+               editTextID.setText(ID.get(i));
+               editTextTitulo.setText(Titulo.get(i));
+               editTextAnio.setText(Anio.get(i));
+               editTextCadena.setText(Cadena.get(i));
+               editTextNumero.setText(Temporadas.get(i));
+            }
+        });
+
     }
     //Función que me rellena el ListView
     void RellenarListView(){
@@ -151,9 +164,9 @@ public class MiBD extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MiBD.this);
-            progressDialog.setTitle("Borrando datos...");
+            progressDialog.setTitle(getString(R.string.BorrarD));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setIndeterminate(true);
+            progressDialog.setIndeterminate(false);
             progressDialog.show();
         }
 
@@ -166,7 +179,7 @@ public class MiBD extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(progressDialog.getProgress() + 10);
+            progressDialog.setProgress(progressDialog.getProgress() + 99);
         }
 
         @Override
@@ -192,7 +205,7 @@ public class MiBD extends AppCompatActivity {
 
                     System.out.println(salida);
                 } else {
-                    Toast.makeText(MiBD.this, "No me pude conectar a la nube", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MiBD.this, getString(R.string.NoConectar), Toast.LENGTH_SHORT).show();
                 }
                 Thread.sleep(2000);
 
@@ -221,9 +234,9 @@ public class MiBD extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MiBD.this);
-            progressDialog.setTitle("Actualizando datos...");
+            progressDialog.setTitle(getString(R.string.Actualizar));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setIndeterminate(true);
+            progressDialog.setIndeterminate(false);
             progressDialog.show();
         }
 
@@ -236,7 +249,7 @@ public class MiBD extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(progressDialog.getProgress() + 10);
+            progressDialog.setProgress(progressDialog.getProgress() + 99);
 
         }
 
@@ -267,7 +280,7 @@ public class MiBD extends AppCompatActivity {
 
                     System.out.println(salida);
                 } else {
-                    Toast.makeText(MiBD.this, "No me pude conectar a la nube", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MiBD.this,getString(R.string.NoConectar), Toast.LENGTH_SHORT).show();
                 }
                 Thread.sleep(2000);
 
@@ -295,9 +308,9 @@ public class MiBD extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MiBD.this);
-            progressDialog.setTitle("Subiendo datos...");
+            progressDialog.setTitle(getString(R.string.Subiendo));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setIndeterminate(true);
+            progressDialog.setIndeterminate(false);
             progressDialog.show();
         }
 
@@ -310,7 +323,7 @@ public class MiBD extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(progressDialog.getProgress() + 10);
+            progressDialog.setProgress(progressDialog.getProgress() + 99);
         }
 
         @Override
@@ -342,7 +355,7 @@ public class MiBD extends AppCompatActivity {
                     ps.close();
                     System.out.println(salida);
                 } else {
-                    Toast.makeText(MiBD.this, "No me pude conectar a la nube", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MiBD.this,getString(R.string.NoConectar), Toast.LENGTH_SHORT).show();
                 }
                 Thread.sleep(2000);
 
@@ -365,9 +378,9 @@ public class MiBD extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MiBD.this);
-            progressDialog.setTitle("Descargando datos...");
+            progressDialog.setTitle(getString(R.string.DescargarD));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setIndeterminate(true);
+            progressDialog.setIndeterminate(false);
             progressDialog.show();
         }
 
@@ -393,7 +406,7 @@ public class MiBD extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(progressDialog.getProgress() + 10);
+            progressDialog.setProgress(progressDialog.getProgress() + 99);
 
         }
 
@@ -418,7 +431,7 @@ public class MiBD extends AppCompatActivity {
                     br.close();
                     inputStream.close();
                 } else {
-                    Toast.makeText(MiBD.this, "No me pude conectar a la nube", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MiBD.this, getString(R.string.NoConectar), Toast.LENGTH_SHORT).show();
                 }
                 Thread.sleep(2000);
 
@@ -441,9 +454,9 @@ public class MiBD extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MiBD.this);
-            progressDialog.setTitle("Descargando datos...");
+            progressDialog.setTitle(getString(R.string.DescargarD));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setIndeterminate(true);
+            progressDialog.setIndeterminate(false);
             progressDialog.show();
         }
 
@@ -472,7 +485,7 @@ public class MiBD extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(progressDialog.getVolumeControlStream() + 10);
+            progressDialog.setProgress(progressDialog.getProgress() + 99);
 
         }
 
@@ -498,7 +511,7 @@ public class MiBD extends AppCompatActivity {
                     br.close();
                     inputStream.close();
                 } else {
-                    Toast.makeText(MiBD.this, "No me pude conectar a la nube", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MiBD.this, getString(R.string.NoConectar), Toast.LENGTH_SHORT).show();
                 }
                 Thread.sleep(2000);
 
@@ -523,9 +536,9 @@ public class MiBD extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MiBD.this);
-            progressDialog.setTitle("Descargando datos...");
+            progressDialog.setTitle(getString(R.string.DescargarD));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setIndeterminate(true);
+            progressDialog.setIndeterminate(false);
             progressDialog.show();
         }
 
@@ -540,7 +553,7 @@ public class MiBD extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(progressDialog.getVolumeControlStream() + 10);
+            progressDialog.setProgress(progressDialog.getProgress() + 99);
 
         }
 
@@ -576,7 +589,7 @@ public class MiBD extends AppCompatActivity {
 
                     }
                 } else {
-                    Toast.makeText(MiBD.this, "No me pude conectar a la nube", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MiBD.this, getString(R.string.NoConectar), Toast.LENGTH_SHORT).show();
                 }
                 Thread.sleep(2000);
 
