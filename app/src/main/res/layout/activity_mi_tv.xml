@@ -7,9 +7,11 @@
     tools:context=".MiTV">
 
     <ListView
-        android:id="@+id/listView"
-        android:layout_width="325dp"
-        android:layout_height="614dp"
+        android:id="@+id/listViewTV"
+        android:layout_width="322dp"
+        android:layout_height="574dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

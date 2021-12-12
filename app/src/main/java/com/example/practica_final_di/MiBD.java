@@ -70,7 +70,7 @@ public class MiBD extends AppCompatActivity {
         buttonCSV=findViewById(R.id.buttonCSV);
         buttonJSON=findViewById(R.id.buttonJSON);
         buttonXML=findViewById(R.id.buttonXML);
-        listView=findViewById(R.id.listView);
+        listView=findViewById(R.id.listViewTV);
         buttonModificar=findViewById(R.id.buttonModificar);
         buttonInsertar=findViewById(R.id.buttonInsertar);
         buttonBorrar=findViewById(R.id.buttonBorrar);

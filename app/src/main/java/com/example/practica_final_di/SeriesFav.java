@@ -34,7 +34,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SeriesFav extends AppCompatActivity {
 
@@ -51,7 +50,7 @@ public class SeriesFav extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_series_fav);
-        listView=findViewById(R.id.listView);
+        listView=findViewById(R.id.listViewTV);
         Foto.add(R.drawable.papel);
         Foto.add(R.drawable.brk);
         Foto.add(R.drawable.lupin);

@@ -7,9 +7,9 @@
     tools:context=".SeriesFav">
 
     <ListView
-        android:id="@+id/listView"
-        android:layout_width="355dp"
-        android:layout_height="620dp"
+        android:id="@+id/listViewTV"
+        android:layout_width="353dp"
+        android:layout_height="573dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
