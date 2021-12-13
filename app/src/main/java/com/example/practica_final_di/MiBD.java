@@ -88,7 +88,24 @@ public class MiBD extends AppCompatActivity {
             public void onClick(View view) {
                 DescargarCSV descargarCSV = new DescargarCSV();
                 descargarCSV.execute("/PF/listadoCSV.php");
-
+                ID.removeAll(ID);
+                Titulo.removeAll(Titulo);
+                Anio.removeAll(Anio);
+                Cadena.removeAll(Cadena);
+                Temporadas.removeAll(Temporadas);
+            }
+        });
+        //Botón que nos lee por CSV
+        buttonJSON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DescargarJSON descargarJSON = new DescargarJSON();
+                descargarJSON.execute("/PF/listadoJSON.php");
+                ID.removeAll(ID);
+                Titulo.removeAll(Titulo);
+                Anio.removeAll(Anio);
+                Cadena.removeAll(Cadena);
+                Temporadas.removeAll(Temporadas);
             }
         });
 
@@ -99,6 +116,11 @@ public class MiBD extends AppCompatActivity {
             public void onClick(View view) {
                 DescargarXML descargarXML = new DescargarXML();
                 descargarXML.execute("/PF/listadoXML.php");
+                ID.removeAll(ID);
+                Titulo.removeAll(Titulo);
+                Anio.removeAll(Anio);
+                Cadena.removeAll(Cadena);
+                Temporadas.removeAll(Temporadas);
             }
         });
         //Butón que nos inserta los datos en nuestra BD por POST
@@ -167,6 +189,7 @@ public class MiBD extends AppCompatActivity {
             progressDialog.setTitle(getString(R.string.BorrarD));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setIndeterminate(false);
+            progressDialog.setProgress(50);
             progressDialog.show();
         }
 
@@ -237,6 +260,7 @@ public class MiBD extends AppCompatActivity {
             progressDialog.setTitle(getString(R.string.Actualizar));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setIndeterminate(false);
+            progressDialog.setProgress(50);
             progressDialog.show();
         }
 
@@ -311,6 +335,7 @@ public class MiBD extends AppCompatActivity {
             progressDialog.setTitle(getString(R.string.Subiendo));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setIndeterminate(false);
+            progressDialog.setProgress(50);
             progressDialog.show();
         }
 
@@ -381,6 +406,7 @@ public class MiBD extends AppCompatActivity {
             progressDialog.setTitle(getString(R.string.DescargarD));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setIndeterminate(false);
+            progressDialog.setProgress(50);
             progressDialog.show();
         }
 
@@ -457,6 +483,7 @@ public class MiBD extends AppCompatActivity {
             progressDialog.setTitle(getString(R.string.DescargarD));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setIndeterminate(false);
+            progressDialog.setProgress(50);
             progressDialog.show();
         }
 
@@ -464,28 +491,25 @@ public class MiBD extends AppCompatActivity {
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
             ArrayAdapter<String> adapter;
-            List<String> list = new ArrayList<String>();
             JsonParser parser = new JsonParser();
             JsonArray jsonArray = parser.parse(todo).getAsJsonArray();
             String[] lineas = todo.split("\n");
             for (JsonElement elemento : jsonArray) {
                 JsonObject objeto = elemento.getAsJsonObject();
-                String dato = " \t " + objeto.get("id").getAsString();
-                dato += " \t " + objeto.get("Nombre").getAsString();
-                dato += " \t " + objeto.get("Ano_Estreno").getAsString();
-                dato += " \t " + objeto.get("Cadena").getAsString();
-                dato += " \t " + objeto.get("Numero_Temporadas").getAsString();
-                list.add(dato);
+                ID.add(objeto.get("id").getAsString());
+                Titulo.add(objeto.get("Nombre").getAsString());
+                Anio.add(objeto.get("Ano_Estreno").getAsString());
+                Cadena.add(objeto.get("Cadena").getAsString());
+                Temporadas.add(objeto.get("Numero_Temporadas").getAsString());
             }
-            adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, list);
-            listView.setAdapter(adapter);
+            RellenarListView();
             progressDialog.dismiss();
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(progressDialog.getProgress() + 99);
+            progressDialog.setProgress(progressDialog.getProgress() + 10);
 
         }
 
@@ -529,8 +553,6 @@ public class MiBD extends AppCompatActivity {
     //Clase que nos lee los datos por XML
     private class DescargarXML extends AsyncTask<String, Void, Void> {
         String todo="" ;
-        ArrayAdapter<String> adapter;
-        List<String> list;
 
         @Override
         protected void onPreExecute() {
@@ -539,22 +561,21 @@ public class MiBD extends AppCompatActivity {
             progressDialog.setTitle(getString(R.string.DescargarD));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setIndeterminate(false);
+            progressDialog.setProgress(50);
             progressDialog.show();
         }
 
         @Override
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
-            adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, list);
-            listView.setAdapter(adapter);
+            RellenarListView();
             progressDialog.dismiss();
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(progressDialog.getProgress() + 99);
-
+            progressDialog.setProgress(progressDialog.getProgress() + 10);
         }
 
         @Override
@@ -566,7 +587,6 @@ public class MiBD extends AppCompatActivity {
             try {
                 url = new URL(SERVIDOR + script);
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-                list= new ArrayList<String>();
                 if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
                     DocumentBuilder db = dbf.newDocumentBuilder();
@@ -581,9 +601,15 @@ public class MiBD extends AppCompatActivity {
                             NodeList nietos = nodo.getChildNodes();
                             String dato;
                             for (int j = 0; j < nietos.getLength(); j++) {
-                                todo+=  nietos.item(j).getTextContent();
+                                todo+=nietos.item(j).getTextContent()+"  ";
                             }
-                            list.add(todo);
+                            if(todo!=""){
+                                ID.add(todo.split("  ")[0].trim());
+                                Titulo.add(todo.split("  ")[1].trim());
+                                Anio.add(todo.split("  ")[2].trim());
+                                Cadena.add(todo.split("  ")[3].trim());
+                                Temporadas.add(todo.split("  ")[4].trim());
+                            }
                             todo="";
                         }
 

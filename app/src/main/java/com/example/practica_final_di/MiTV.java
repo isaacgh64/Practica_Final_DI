@@ -30,7 +30,10 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -368,7 +371,8 @@ public class MiTV extends AppCompatActivity {
             progressDialog = new ProgressDialog(MiTV.this);
             progressDialog.setTitle(getString(R.string.DescargarD));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            progressDialog.setIndeterminate(true);
+            progressDialog.setIndeterminate(false);
+            progressDialog.setProgress(50);
             progressDialog.show();
         }
 
@@ -382,7 +386,7 @@ public class MiTV extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(progressDialog.getVolumeControlStream() + 10);
+            progressDialog.setProgress(progressDialog.getProgress()+10);
 
         }
 
@@ -401,7 +405,6 @@ public class MiTV extends AppCompatActivity {
                     Document doc = db.parse(new URL(url.toString()).openStream());
                     Element raiz = doc.getDocumentElement();
                     NodeList hijos = raiz.getChildNodes();
-
                     for (int i = 0; i < hijos.getLength(); i++) {
                         Node nodo = hijos.item(i);
 
@@ -420,14 +423,11 @@ public class MiTV extends AppCompatActivity {
                 } else {
                     Toast.makeText(MiTV.this, getString(R.string.NoConectar), Toast.LENGTH_SHORT).show();
                 }
-                Thread.sleep(2000);
 
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
@@ -441,14 +441,13 @@ public class MiTV extends AppCompatActivity {
     //Clase que descarga la segunda parte de lo que echan en cada canal
     private class DescargarXML2 extends AsyncTask<String, Void, Void> {
         String todo="" ;
-        ArrayAdapter<String> adapter;
-        List<String> list;
+        int posicion;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MiTV.this);
-            progressDialog.setTitle("Obteniendo la parrilla Televisiva del Canal...");
+            progressDialog.setTitle("Obteniendo la parrilla Televisiva del Canal... ");
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setIndeterminate(true);
             progressDialog.show();
@@ -459,7 +458,8 @@ public class MiTV extends AppCompatActivity {
             super.onPostExecute(unused);
             progressDialog.dismiss();
             AlertDialog.Builder builder=new AlertDialog.Builder(MiTV.this);
-            builder.setTitle("Programacion del canal");
+            builder.setTitle("Programacion del canal "+nombre.get(posicion));
+            builder.setIcon(Fotos.get(posicion));
             for(int i =0;i<Canales.size();i++){
                 builder.setMessage("\n"+Canales.get(i));
             }
@@ -481,31 +481,40 @@ public class MiTV extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... strings) {
             String script = strings[0];
-            int posicion=Integer.parseInt(strings[1]);
+            posicion=Integer.parseInt(strings[1]);
             URL url;
             HttpURLConnection httpURLConnection;
 
             try {
                 url = new URL(script);
                 httpURLConnection = (HttpURLConnection) url.openConnection();
-                list= new ArrayList<String>();
                 if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
                     DocumentBuilder db = dbf.newDocumentBuilder();
                     Document doc = db.parse(new URL(url.toString()).openStream());
                     Element raiz = doc.getDocumentElement();
                     NodeList hijos = raiz.getChildNodes();
-
                     for (int i = 0; i < hijos.getLength(); i++) {
                         Node nodo = hijos.item(i);
 
                         if (nodo instanceof Element ) {
                             if(nodo.getNodeName().compareTo("programme")==0) {
+
                                 if(((Element) nodo).getAttribute("channel").compareTo(nombre.get(posicion))==0) {
+                                    String start=((Element) nodo).getAttribute("start");
+                                    String stop=((Element) nodo).getAttribute("stop");
+                                    start=start.split(" ")[0];
+                                    stop=stop.split(" ")[0];
+                                    SimpleDateFormat formato = new SimpleDateFormat("yyyyMMddHHmmss");
+                                    Date fechas= formato.parse(start);
+                                    Date fechap= formato.parse(stop);
+                                    todo+="Inicio: "+fechas+"\n";
+                                    todo+="Fin: "+fechap+"\n";
                                     NodeList nietos = nodo.getChildNodes();
                                     for (int j = 0; j < nietos.getLength(); j++) {
                                         todo += nietos.item(j).getTextContent();
                                     }
+                                    todo+="---------------------------------------------------\n";
                                     Canales.add(todo);
                                 }
                             }
@@ -514,18 +523,17 @@ public class MiTV extends AppCompatActivity {
                 } else {
                     Toast.makeText(MiTV.this, "No me pude conectar a la nube", Toast.LENGTH_SHORT).show();
                 }
-                Thread.sleep(2000);
 
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             } catch (SAXException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
             return null;

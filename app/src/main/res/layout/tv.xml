@@ -20,7 +20,7 @@
         android:layout_marginTop="76dp"
         android:text="Marca"
         android:textAlignment="center"
-        android:textColor="#303F9F"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

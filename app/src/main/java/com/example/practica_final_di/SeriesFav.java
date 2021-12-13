@@ -159,7 +159,6 @@ public class SeriesFav extends AppCompatActivity {
                 if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     InputStream inputStream = httpURLConnection.getInputStream();
                     BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-
                     String linea = "";
                     while ((linea = br.readLine()) != null) {
                         todo += linea;
@@ -171,9 +170,6 @@ public class SeriesFav extends AppCompatActivity {
                 } else {
                     Toast.makeText(SeriesFav.this, getString(R.string.NoConectar), Toast.LENGTH_SHORT).show();
                 }
-                Thread.sleep(2000);
-
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
