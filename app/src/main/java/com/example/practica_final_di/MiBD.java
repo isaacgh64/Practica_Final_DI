@@ -196,6 +196,7 @@ public class MiBD extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
+            buttonCSV.callOnClick();
             progressDialog.dismiss();
         }
 
@@ -216,7 +217,6 @@ public class MiBD extends AppCompatActivity {
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     id= URLEncoder.encode(id,"UTF-8");
-
                     InputStream inputStream = httpURLConnection.getInputStream();
                     BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
                     String salida="";
@@ -267,6 +267,7 @@ public class MiBD extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
+            buttonCSV.callOnClick();
             progressDialog.dismiss();
         }
 
@@ -342,6 +343,7 @@ public class MiBD extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
+            buttonCSV.callOnClick();
             progressDialog.dismiss();
         }
 
