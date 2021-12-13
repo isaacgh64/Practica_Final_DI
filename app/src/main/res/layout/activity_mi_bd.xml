@@ -177,17 +177,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.342" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="352dp"
-        android:layout_height="340dp"
-        android:layout_marginTop="25dp"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonVolver1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.593"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBorrar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:rippleColor="@color/purple_200"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="385dp"
+        android:layout_height="283dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonVolver1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBorrar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -206,7 +219,9 @@
                 app:layout_constraintHorizontal_bias="0.486"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0">
+
+            </ListView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

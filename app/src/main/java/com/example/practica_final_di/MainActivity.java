@@ -15,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Ponemos el icono en la parte de arriba de nuestra app
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         //Los buscamosa en nuestro activity Main
         buttonMiBD=findViewById(R.id.buttonMiBD);
         buttonSeries=findViewById(R.id.buttonSeries);

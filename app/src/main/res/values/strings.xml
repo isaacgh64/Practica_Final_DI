@@ -24,4 +24,6 @@
     <string name="ModificarBD">Modificar</string>
     <string name="BorrarBD" >Borrar</string>
     <string name="InsertarBD">Insertar</string>
+    <string name="ParrilaCanal">"Obteniendo la parrilla Televisiva del Canal... "</string>
+    <string name="CanalesCanal">"Programacion del canal "</string>
 </resources>

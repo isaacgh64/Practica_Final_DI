@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -46,11 +48,16 @@ public class SeriesFav extends AppCompatActivity {
     ArrayList<String> FechaSalida=new ArrayList();
     ArrayList<String> Ejecutar=new ArrayList();
     public int posicion=0;
+    FloatingActionButton buttonVolver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_series_fav);
         listView=findViewById(R.id.listViewTV);
+        buttonVolver=findViewById(R.id.buttonVolver2);
+        //Ponemos el icono en la parte de arriba de nuestra app
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         Foto.add(R.drawable.papel);
         Foto.add(R.drawable.brk);
         Foto.add(R.drawable.lupin);
@@ -69,6 +76,14 @@ public class SeriesFav extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                MostrarInfo(i);
+            }
+        });
+        //Botón que al pulsar sobre él nos devuelve a la actividad principal
+        buttonVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SeriesFav.this,MainActivity.class);
+                startActivity(intent);
             }
         });
     }

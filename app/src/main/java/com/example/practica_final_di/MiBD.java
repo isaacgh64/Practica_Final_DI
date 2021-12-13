@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -52,6 +54,7 @@ public class MiBD extends AppCompatActivity {
     EditText editTextTitulo, editTextAnio, editTextCadena, editTextID,editTextNumero;
     ListView listView;
     ProgressDialog progressDialog;
+    FloatingActionButton buttonVolver;
     static final String SERVIDOR = "http://192.168.3.2";
 
     //ArrayList que usareamos para mostrar los datos más Bonitos
@@ -66,6 +69,9 @@ public class MiBD extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mi_bd);
+        //Ponemos el icono en la parte de arriba de nuestra app
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         //Botones que vamos a usar en nuestra aplicación
         buttonCSV=findViewById(R.id.buttonCSV);
         buttonJSON=findViewById(R.id.buttonJSON);
@@ -74,6 +80,7 @@ public class MiBD extends AppCompatActivity {
         buttonModificar=findViewById(R.id.buttonModificar);
         buttonInsertar=findViewById(R.id.buttonInsertar);
         buttonBorrar=findViewById(R.id.buttonBorrar);
+        buttonVolver=findViewById(R.id.buttonVolver1);
 
         //EditText que vamos a usar en nuestra aplicacion
         editTextTitulo=findViewById(R.id.editTextTitulo);
@@ -155,6 +162,15 @@ public class MiBD extends AppCompatActivity {
                 String id=editTextID.getText().toString();
                 Borrar borrar = new Borrar (id);
                 borrar.execute("/PF/borrarGET.php?id="+id);
+            }
+        });
+
+        //Botón que al pulsar sobre él nos devuelve a la actividad principal
+        buttonVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MiBD.this,MainActivity.class);
+                startActivity(intent);
             }
         });
 

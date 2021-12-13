@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,11 +50,16 @@ public class MiTV extends AppCompatActivity {
     ArrayList<String>nombre=new ArrayList();
     ArrayList<String>Canales=new ArrayList();
     ArrayList<Integer>Fotos=new ArrayList();
+    FloatingActionButton buttonVolver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mi_tv);
+        //Ponemos el icono en la parte de arriba de nuestra app
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         listView=findViewById(R.id.listViewTV);
+        buttonVolver=findViewById(R.id.buttonVolver);
         //Rellenamos nuestro listView de Fotos
         rellenarFotos();
         DescargarXML descargarXML = new DescargarXML();
@@ -62,6 +70,14 @@ public class MiTV extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DescargarXML2 descargarXML2 = new DescargarXML2();
                 descargarXML2.execute("https://raw.githubusercontent.com/dracohe/CARLOS/master/guide_IPTV.xml",Integer.toString(position));
+            }
+        });
+        //Botón que al pulsar sobre él nos devuelve a la actividad principal
+        buttonVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MiTV.this,MainActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -386,7 +402,7 @@ public class MiTV extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(progressDialog.getProgress()+10);
+            progressDialog.setProgress(progressDialog.getProgress()+99);
 
         }
 
@@ -447,7 +463,7 @@ public class MiTV extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = new ProgressDialog(MiTV.this);
-            progressDialog.setTitle("Obteniendo la parrilla Televisiva del Canal... ");
+            progressDialog.setTitle(getString(R.string.ParrilaCanal));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setIndeterminate(true);
             progressDialog.show();
@@ -458,7 +474,7 @@ public class MiTV extends AppCompatActivity {
             super.onPostExecute(unused);
             progressDialog.dismiss();
             AlertDialog.Builder builder=new AlertDialog.Builder(MiTV.this);
-            builder.setTitle("Programacion del canal "+nombre.get(posicion));
+            builder.setTitle(getString(R.string.CanalesCanal)+nombre.get(posicion));
             builder.setIcon(Fotos.get(posicion));
             for(int i =0;i<Canales.size();i++){
                 builder.setMessage("\n"+Canales.get(i));
